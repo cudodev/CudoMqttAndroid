@@ -22,7 +22,7 @@ afterEvaluate {
                 from components.release
 
                 // You can then customize attributes of the publication as shown below.
-                groupId = 'cudodev'
+                groupId = 'com.github.cudodev'
                 artifactId = 'cudoMqttAndroid'
                 version = '1.0'
             }
@@ -31,7 +31,7 @@ afterEvaluate {
                 // Applies the component for the debug build variant.
                 from components.debug
 
-                groupId = 'cudodev'
+                groupId = 'com.github.cudodev'
                 artifactId = 'cudoMqttAndroid-debug'
                 version = '1.0'
             }

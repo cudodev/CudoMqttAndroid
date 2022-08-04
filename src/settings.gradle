@@ -1,2 +1,2 @@
-include ':app', ':customnotiagent', ':org.eclipse.paho.android.service', ':customnotiarr', ':testapp'
-include ':com.cudo.mqtt.android'
+include ':testapp'
+include ':cudoMqttAndroid'

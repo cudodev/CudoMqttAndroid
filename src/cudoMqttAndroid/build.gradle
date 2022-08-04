@@ -1,7 +1,21 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
+    id 'kotlin-android-extensions'
     id 'kotlin-kapt'
+    id 'maven-publish'
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                groupId = 'com.cudo.mqtt.android'
+                artifactId = 'cudoMqttAndroid'
+                version = '1.0'
+            }
+        }
+    }
 }
 
 android {
@@ -25,15 +39,6 @@ android {
         }
     }
 
-    android.libraryVariants.all { variant ->
-        variant.variantData.outputFactory.output.apkDatas.each { output ->
-            logger.warn('You got to variant: ' + variant.variantData.outputFactory.output.apkDatas + ' and output: ' + output)
-
-            if (output.fullName.equals("release")) {
-                output.outputFileName = "cudomqtt-android-" + output.versionName + "." + output.versionCode + ".aar"
-            }
-        }
-    }
 }
 
 dependencies {
@@ -41,7 +46,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation "androidx.core:core-ktx:1.8.0"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.10"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation "com.github.AppDevNext.Logcat:LogcatCoreLib:2.11.2"
 
     implementation "androidx.room:room-runtime:2.4.2"
@@ -73,22 +78,6 @@ task exportJar(type: Copy){
     into('release/')
     include('classes.jar')
     rename("classes.jar", "${project.name}.jar")
-}
-
-task createJar(type: Jar) {
-    from {
-        List<File> allFiles = new ArrayList<>();
-        configurations.compile.collect {
-            for (File f : zipTree(it).getFiles()) {
-                if (f.getName().equals("classes.jar")) {
-                    allFiles.addAll(zipTree(f).getAt("asFileTrees").get(0).getDir())
-                }
-            }
-        }
-        allFiles.add(new File('build/intermediates/classes/release'))
-        allFiles // To return the result inside a lambda
-    }
-    archiveName("${project.name}.jar")
 }
 
 exportJar.dependsOn(deleteObjectJar)

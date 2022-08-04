@@ -56,11 +56,6 @@ dependencies {
     androidTestImplementation "androidx.test:rules:1.4.0"
 }
 
-task androidSourcesJar(type: Jar) {
-    classifier 'sources'
-    from android.sourceSets.main.java.srcDirs
-}
-
 afterEvaluate {
     publishing {
         publications {
@@ -70,7 +65,18 @@ afterEvaluate {
                 from components.release
 
                 // You can then customize attributes of the publication as shown below.
-                artifact androidSourcesJar
+                groupId = 'com.github.cudodev'
+                artifactId = 'CudoMqttAndroid'
+                version = '1.0.0'
+            }
+            // Creates a Maven publication called “debug”.
+            debug(MavenPublication) {
+                // Applies the component for the debug build variant.
+                from components.debug
+
+                groupId = 'com.github.cudodev'
+                artifactId = 'CudoMqttAndroid-debug'
+                version = '1.0.0'
             }
         }
     }

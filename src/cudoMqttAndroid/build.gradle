@@ -81,7 +81,7 @@ afterEvaluate {
                 // You can then customize attributes of the publication as shown below.
                 groupId = 'com.github.cudodev'
                 artifactId = 'CudoMqttAndroid'
-                version = '0.0.4'
+                version = '1.0.1'
 
                 pom.withXml {
                     configurations.compile.allDependencies.each {

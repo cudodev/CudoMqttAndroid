@@ -18,6 +18,10 @@ android {
         testApplicationId "info.mgtt.android.service.test"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
+        javaCompileOptions {
+            annotationProcessorOptions { arguments = ["room.schemaLocation": "$projectDir/schemas".toString()] }
+        }
+
     }
 
     buildTypes {
@@ -67,7 +71,7 @@ afterEvaluate {
                 // You can then customize attributes of the publication as shown below.
                 groupId = 'com.github.cudodev'
                 artifactId = 'CudoMqttAndroid'
-                version = '0.0.3'
+                version = '0.0.5'
 
                 pom.withXml {
                     configurations.compile.allDependencies.each {

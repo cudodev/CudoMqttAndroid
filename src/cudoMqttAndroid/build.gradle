@@ -18,6 +18,20 @@ android {
         testApplicationId "info.mgtt.android.service.test"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
+        packagingOptions {
+            pickFirst 'META-INF/serviceLibrary_debug.kotlin_module'
+        }
+
+        javaCompileOptions {
+            annotationProcessorOptions { arguments = ["room.schemaLocation": "$projectDir/schemas".toString()] }
+        }
+
+        buildTypes {
+            release {
+                minifyEnabled false
+                consumerProguardFile('proguard-sdk.pro')
+            }
+        }
     }
 
     buildTypes {
@@ -67,7 +81,7 @@ afterEvaluate {
                 // You can then customize attributes of the publication as shown below.
                 groupId = 'com.github.cudodev'
                 artifactId = 'CudoMqttAndroid'
-                version = '0.0.3'
+                version = '0.0.4'
 
                 pom.withXml {
                     configurations.compile.allDependencies.each {

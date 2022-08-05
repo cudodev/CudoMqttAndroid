@@ -1,2 +1,5 @@
 jdk:
   - openjdk11
+install:
+  - ./gradlew :CudoMqttAndroid:build :CudoMqttAndroid:publishToMavenLocal
+  - find . -name "*.aar"

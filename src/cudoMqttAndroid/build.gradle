@@ -22,19 +22,20 @@ android {
             annotationProcessorOptions { arguments = ["room.schemaLocation": "$projectDir/schemas".toString()] }
         }
 
+        compileOptions {
+            sourceCompatibility = JavaVersion.VERSION_11
+            targetCompatibility = JavaVersion.VERSION_11
+        }
+
+        kotlinOptions {
+            jvmTarget = "11"
+        }
     }
 
     buildTypes {
         release {
             minifyEnabled false
             consumerProguardFile('proguard-sdk.pro')
-        }
-    }
-    configurations.all {
-        resolutionStrategy.eachDependency { details ->
-            if (details.requested.group == 'org.jetbrains.kotlin') {
-                details.useVersion "1.5.10"
-            }
         }
     }
 }
@@ -47,8 +48,9 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation "com.github.AppDevNext.Logcat:LogcatCoreLib:2.11.2"
 
-    implementation "androidx.room:room-runtime:2.4.2"
-    kapt "androidx.room:room-compiler:2.4.2"
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
 
     // room InvocationTargetException 에러 추가
     kapt("org.xerial:sqlite-jdbc:3.36.0")
@@ -62,6 +64,10 @@ dependencies {
     androidTestImplementation "androidx.test:runner:1.4.0"
     androidTestImplementation "androidx.test:rules:1.4.0"
 }
+task androidSourcesJar(type: Jar) {
+    classifier 'sources'
+    from android.sourceSets.main.java.srcDirs
+}
 
 afterEvaluate {
     publishing {
@@ -72,18 +78,8 @@ afterEvaluate {
                 from components.release
 
                 // You can then customize attributes of the publication as shown below.
-                groupId = 'com.github.cudodev'
-                artifactId = 'cudoMqttAndroid'
-                version = '0.0.8'
-
-                pom.withXml {
-                    configurations.compile.allDependencies.each {
-                        def dependencyNode = dependenciesNode.appendNode('dependency')
-                        dependencyNode.appendNode('groupId', it.group)
-                        dependencyNode.appendNode('artifactId', it.name)
-                        dependencyNode.appendNode('version', it.version)
-                }
+                artifact androidSourcesJar
             }
         }
     }
-}}
+}

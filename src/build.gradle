@@ -2,7 +2,7 @@
 
 buildscript {
 
-    ext.kotlin_version = "1.5.10"
+    ext.kotlin_version = "1.7.10"
     repositories {
         google()
         mavenCentral()
@@ -10,7 +10,7 @@ buildscript {
         mavenLocal()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.1'
+        classpath 'com.android.tools.build:gradle:7.0.4'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
@@ -22,7 +22,7 @@ buildscript {
 
 ext {
     clientVersion = '1.1.0'
-
+    room_version = '2.4.2'
     mavenUrl = "https://repo.eclipse.org/content/repositories/paho-releases/"
 }
 
